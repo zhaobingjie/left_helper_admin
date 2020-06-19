@@ -9,16 +9,23 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+namespace think\config\driver;
 
-Route::get('hello/:name', 'index/hello');
+class Ini
+{
+    protected $config;
 
-Route::get('ok','index/ok');
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
 
-Route::get('test/','index/test');
-
-return [
-
-];
+    public function parse()
+    {
+        if (is_file($this->config)) {
+            return parse_ini_file($this->config, true);
+        } else {
+            return parse_ini_string($this->config, true);
+        }
+    }
+}

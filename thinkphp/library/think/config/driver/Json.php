@@ -9,16 +9,23 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+namespace think\config\driver;
 
-Route::get('hello/:name', 'index/hello');
+class Json
+{
+    protected $config;
 
-Route::get('ok','index/ok');
+    public function __construct($config)
+    {
+        if (is_file($config)) {
+            $config = file_get_contents($config);
+        }
 
-Route::get('test/','index/test');
+        $this->config = $config;
+    }
 
-return [
-
-];
+    public function parse()
+    {
+        return json_decode($this->config, true);
+    }
+}

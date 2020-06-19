@@ -2,23 +2,32 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2015 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
+// | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+namespace think\console\output\driver;
 
-Route::get('hello/:name', 'index/hello');
+use think\console\Output;
 
-Route::get('ok','index/ok');
+class Nothing
+{
 
-Route::get('test/','index/test');
+    public function __construct(Output $output)
+    {
+        // do nothing
+    }
 
-return [
+    public function write($messages, $newline = false, $options = Output::OUTPUT_NORMAL)
+    {
+        // do nothing
+    }
 
-];
+    public function renderException(\Exception $e)
+    {
+        // do nothing
+    }
+}

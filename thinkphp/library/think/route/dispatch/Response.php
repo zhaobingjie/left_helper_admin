@@ -9,16 +9,15 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+namespace think\route\dispatch;
 
-Route::get('hello/:name', 'index/hello');
+use think\route\Dispatch;
 
-Route::get('ok','index/ok');
+class Response extends Dispatch
+{
+    public function exec()
+    {
+        return $this->dispatch;
+    }
 
-Route::get('test/','index/test');
-
-return [
-
-];
+}

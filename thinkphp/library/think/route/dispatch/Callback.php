@@ -9,16 +9,18 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+namespace think\route\dispatch;
 
-Route::get('hello/:name', 'index/hello');
+use think\route\Dispatch;
 
-Route::get('ok','index/ok');
+class Callback extends Dispatch
+{
+    public function exec()
+    {
+        // 执行回调方法
+        $vars = array_merge($this->request->param(), $this->param);
 
-Route::get('test/','index/test');
+        return $this->app->invoke($this->dispatch, $vars);
+    }
 
-return [
-
-];
+}

@@ -9,16 +9,18 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+namespace think\route\dispatch;
 
-Route::get('hello/:name', 'index/hello');
+use think\Response;
+use think\route\Dispatch;
 
-Route::get('ok','index/ok');
+class View extends Dispatch
+{
+    public function exec()
+    {
+        // 渲染模板输出
+        $vars = array_merge($this->request->param(), $this->param);
 
-Route::get('test/','index/test');
-
-return [
-
-];
+        return Response::create($this->dispatch, 'view')->assign($vars);
+    }
+}

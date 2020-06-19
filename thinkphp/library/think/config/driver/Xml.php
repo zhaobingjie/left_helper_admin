@@ -9,16 +9,32 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+namespace think\config\driver;
 
-Route::get('hello/:name', 'index/hello');
+class Xml
+{
+    protected $config;
 
-Route::get('ok','index/ok');
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
 
-Route::get('test/','index/test');
+    public function parse()
+    {
+        if (is_file($this->config)) {
+            $content = simplexml_load_file($this->config);
+        } else {
+            $content = simplexml_load_string($this->config);
+        }
 
-return [
+        $result = (array) $content;
+        foreach ($result as $key => $val) {
+            if (is_object($val)) {
+                $result[$key] = (array) $val;
+            }
+        }
 
-];
+        return $result;
+    }
+}
